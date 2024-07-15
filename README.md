@@ -1,8 +1,8 @@
-# Where to look
+# Intro
 
 Here's a challenge I did for another company. I think it is a good excuse for a tech talk.
 
-# Api Challenge
+## Api Challenge
 
 We have a very simple app that consists of 2 models:
 
@@ -11,7 +11,7 @@ We have a very simple app that consists of 2 models:
 
 and 1 endpoint that allows to post the newest location of the bike.
 
-# The Task
+### The Task
 
 Assume every bike has a GPS tracker posting its location approximately every 30 minutes.
 
