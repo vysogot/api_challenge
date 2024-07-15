@@ -1,4 +1,33 @@
-# Solution
+# Where to look
+
+Here's a challenge I did for another company. I think it is a good excuse for a tech talk.
+
+# Api Challenge
+
+We have a very simple app that consists of 2 models:
+
+* Bike
+* Location
+
+and 1 endpoint that allows to post the newest location of the bike.
+
+# The Task
+
+Assume every bike has a GPS tracker posting its location approximately every 30 minutes.
+
+**Task**: Create an endpoint to get a bike's current location (GET bikes/:id).
+
+**Problem**: GPS location readings can be imprecise, with consecutive readings for a stationary bike differing by up to 50 meters. To avoid users walking in circles, we need to approximate the location based on the readings.
+
+**Solution**: Approximate the location by averaging the latitude and longitude of the 5 newest readings. The GET bikes/:id endpoint should return this approximate location.
+
+**Assumptions**:
+
+The code will handle a dataset with a lot of historical data and potentially thousands of bikes.
+The bikes/:id endpoint will experience higher traffic than the POST location endpoint.
+Data store: SQLite (additional datastores and libraries can be added if needed).
+
+# My solution
 
 `GET bikes/:id` needs to be quick, so it's better to have the approximate location of the bike readily available. When it's not available yet, it can be calculated on the fly with a fast SQL query.
 
@@ -29,42 +58,3 @@ curl --location 'localhost:3000/bikes/1'
 ```
 
 I took me somewhere between 6-8 hours.
-
-# Api Challenge
-
-Welcome to Api Challenge :D
-
-We have a very simple app that consists of 2 models:
-
-* Bike
-* Location
-
-and 1 endpoint that allows to post the newest location of the bike.
-
-# The Task
-
-Let's assume that every bike has a gps tracker that posts its current location aoproximately every 30 minutes
-
-The task at hand is to create an endpoint where we can get a bike with its current location
-(simple `GET bikes/:id` endpoint).
-
-The problem with the location we get from the tracker is that it is not very precise and even when the bike is standing still
-we can get consecutive location readings that are 50 meters apart. We don't want users to walk in circles to find a bike therefore
-we need some way of approximating the location based on the readings we get. For simplicity we can assume that the approximation can
-be just a simple average of latitude and longitude of up to 5 newest readings from current bike location.
-The location returned in `GET bikes/:id` endpoint should be the approximate one.
-
-When building the solution let's assume that the code should work on a data set that has been gathering information
-for quite some time (there may be thousands of bikess and bikes may have already a lot of historical locations)
-and that we expect non-trivial traffic on the `bikes/:id` enddpoint (for sure heavier than what we get on POST location endpoint)
-
-The data store is sqlite for simplicity. If you need to add any other datastore feel free to do so. Same regarding any additional
-libraries. You are of course welcome to change the existing code.
-
-# Things that you don't need to care about
-
-Few things that we don't really care about in this challenge:
-* You don't have to worry about state of the bike (whether it is rented or not etc)
-* You can assume that the location of the bike is sent to the backend only when the bike is not moving.
-  Therefore we don't need to worry about the cases when you get the bike location and few seconds later it's in
-  compeletely different place.
